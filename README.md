@@ -9,9 +9,9 @@ Turns Maps into Arrays, Turns Arrays into Maps
 
 #Usage
 
-var mapAttack = require('map-attack');
+    var mapAttack = require('map-attack');
 
-mapAttack( Map||Array, indexByString)
+    mapAttack( Map||Array, indexByString)
 
 #Converting Array to Map
 
@@ -83,7 +83,10 @@ Result :
 
 #Notes:
 
-    This library uses
-        deep-setter
-        deep-value
-        So any syntax those accept for setting/getting values from objects you can use for your index by parameter
+This library uses:
+
+[deep-setter](https://www.npmjs.com/package/deep-setter)
+
+[deep-value](https://www.npmjs.com/package/deep-value)
+
+So any syntax those accept for setting/getting values from objects you can use for your index by parameter

@@ -1,0 +1,32 @@
+{
+  "name": "map-attack",
+  "version": "1.0.0",
+  "description": "Turns Maps into Arrays, Turns Arrays into Maps",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arupex/map-attack.git"
+  },
+  "keywords": [
+    "map",
+    "array",
+    "converter"
+  ],
+  "author": "dirwin517",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/arupex/map-attack/issues"
+  },
+  "homepage": "https://github.com/arupex/map-attack#readme",
+  "devDependencies": {
+    "assert-diff": "^1.0.1",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "deep-setter": "^1.0.1",
+    "deep-value": "^1.0.2"
+  }
+}

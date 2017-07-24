@@ -2,7 +2,7 @@
  * Created by daniel.irwin on 6/24/16.
  */
 
-function arupex_map_attack(mapOrArray, key){
+function arupex_map_attack(mapOrArray, key, asArrayValue){
 
     if(typeof arupex_deep_value == 'undefined' && typeof require !== 'undefined'){
         arupex_deep_value = require('deep-value');
@@ -16,7 +16,15 @@ function arupex_map_attack(mapOrArray, key){
         var result = {};
 
         array.forEach(function(element){
-            result[arupex_deep_value(element, key)] = element;
+            if(asArrayValue) {
+                if(!result[arupex_deep_value(element, key)]){
+                    result[arupex_deep_value(element, key)] = [];
+                }
+                result[arupex_deep_value(element, key)].push(element);
+            }
+            else {
+                result[arupex_deep_value(element, key)] = element;
+            }
         });
 
         return result;

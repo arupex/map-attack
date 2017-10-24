@@ -4,40 +4,34 @@
 
 function arupex_map_attack(mapOrArray, key, asArrayValue){
 
-    if(typeof arupex_deep_value == 'undefined' && typeof require !== 'undefined'){
+    if(typeof arupex_deep_value === 'undefined' && typeof require !== 'undefined'){
         arupex_deep_value = require('deep-value');
     }
 
-    if(typeof arupex_deep_setter == 'undefined' && typeof require !== 'undefined'){
+    if(typeof arupex_deep_setter === 'undefined' && typeof require !== 'undefined'){
         arupex_deep_setter = require('deep-setter');
     }
 
     function convertArrayToMap(array, key){
-        var result = {};
-
-        array.forEach(function(element){
+        return array.reduce(function(acc, element){
             if(asArrayValue) {
-                if(!result[arupex_deep_value(element, key)]){
-                    result[arupex_deep_value(element, key)] = [];
+                if(!acc[arupex_deep_value(element, key)]){
+                    acc[arupex_deep_value(element, key)] = [];
                 }
-                result[arupex_deep_value(element, key)].push(element);
+                acc[arupex_deep_value(element, key)].push(element);
             }
             else {
-                result[arupex_deep_value(element, key)] = element;
+                acc[arupex_deep_value(element, key)] = element;
             }
-        });
-
-        return result;
+            return acc;
+        }, {});
     }
 
     function convertMapToArray(map, key){
-        var result = [];
-
-        Object.keys(map).forEach(function(id){
-            result.push(arupex_deep_setter(map[id], key, id));
-        });
-
-        return result;
+        return Object.keys(map).reduce(function(acc, id){
+            acc.push(arupex_deep_setter(map[id], key, id));
+            return acc;
+        }, []);
     }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "map-attack",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Turns Maps into Arrays, Turns Arrays into Maps",
   "main": "index.js",
   "scripts": {

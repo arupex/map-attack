@@ -172,4 +172,71 @@ describe('map-attack', function () {
     });
 
 
+    it('array to map of arrays using bucket function', function () {
+        assert(mapAttack([
+            {
+                id: '1',
+                value: 'hello'
+            },
+            {
+                id: '2',
+                value: 'world'
+            },
+            {
+                id: '3',
+                value: '!'
+            },
+            {
+                id: '3',
+                value: 'geez'
+            }
+        ], function (obj) {
+            if (parseInt(obj.id) > 2) {
+                return 'gt2';
+            }
+            return 'lte2';
+        }, true), {
+            'lte2': [{
+                id: '1',
+                value: 'hello'
+            },
+                {
+                    id: '2',
+                    value: 'world'
+                }],
+            'gt2': [{
+                id: '3',
+                value: '!'
+            },
+                {
+                    id: '3',
+                    value: 'geez'
+                }]
+        });
+    });
+
+
+    it('map to arrays using bucket function hw', function () {
+        assert(mapAttack({
+            1: {msg: 'hello'},
+            2: {msg: 'world'},
+            3: {msg: '!'}
+        }, function (obj) {
+            return obj.msg;
+        }, true), [
+            {
+                msg: 'hello',
+                hello: '1'
+            },
+            {
+                msg: 'world',
+                world: '2'
+            },
+            {
+                msg: '!',
+                '!': '3'
+            }
+        ]);
+    });
+
 });

@@ -2,51 +2,59 @@
  * Created by daniel.irwin on 6/24/16.
  */
 
-function arupex_map_attack(mapOrArray, key, asArrayValue){
+if (typeof arupex_deep_value === 'undefined' && typeof require !== 'undefined') {
+    arupex_deep_value = require('deep-value');
+}
 
-    if(typeof arupex_deep_value === 'undefined' && typeof require !== 'undefined'){
-        arupex_deep_value = require('deep-value');
+if (typeof arupex_deep_setter === 'undefined' && typeof require !== 'undefined') {
+    arupex_deep_setter = require('deep-setter');
+}
+
+function arupex_map_attack(mapOrArray, key, asArrayValue) {
+    let fncKey = (typeof key === 'function');
+
+    let complex = !fncKey && typeof key === 'string' && (key.indexOf('.') !== -1);
+    let accessor = function (element, skey) {
+        return element[skey];
+    };
+    let setter = function (element, key, value) {
+        element[key] = value;
+        return element;
+    };
+
+    if (complex) {
+        accessor = arupex_deep_value;
+        setter = arupex_deep_setter;
     }
 
-    if(typeof arupex_deep_setter === 'undefined' && typeof require !== 'undefined'){
-        arupex_deep_setter = require('deep-setter');
-    }
+    if (mapOrArray && typeof mapOrArray === 'object') {
 
-    function convertArrayToMap(array, key){
-        return array.reduce(function(acc, element){
-            if(asArrayValue) {
-                if(!acc[arupex_deep_value(element, key)]){
-                    acc[arupex_deep_value(element, key)] = [];
+        if (Array.isArray(mapOrArray)) {
+            let result = {};
+            mapOrArray.forEach(function (element) {
+                let keyRef = fncKey ? key(element) : accessor(element, key);
+                if (asArrayValue) {
+                    if (!result[keyRef]) {
+                        result[keyRef] = [];
+                    }
+                    result[keyRef].push(element);
                 }
-                acc[arupex_deep_value(element, key)].push(element);
-            }
-            else {
-                acc[arupex_deep_value(element, key)] = element;
-            }
-            return acc;
-        }, {});
-    }
-
-    function convertMapToArray(map, key){
-        return Object.keys(map).reduce(function(acc, id){
-            acc.push(arupex_deep_setter(map[id], key, id));
-            return acc;
-        }, []);
-    }
-
-
-    if(mapOrArray && typeof mapOrArray === 'object') {
-        if(Array.isArray(mapOrArray)){
-            return convertArrayToMap(mapOrArray, key);
+                else {
+                    result[keyRef] = element;
+                }
+            });
+            return result;
         }
-        else {
-            return convertMapToArray(mapOrArray, key);
-        }
+
+        return Object.keys(mapOrArray).map(function (id) {
+            return setter(mapOrArray[id], fncKey ? key(mapOrArray[id]) : key, id);
+        });
+
     }
     return mapOrArray;
 }
 
 
-if(typeof module !== 'undefined'){
+if (typeof module !== 'undefined') {
     module.exports = arupex_map_attack;
 }

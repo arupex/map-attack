@@ -5,11 +5,11 @@
 'use strict';
 
 if (typeof arupex_deep_value === 'undefined' && typeof require !== 'undefined') {
-    arupex_deep_value = require('deep-value');
+    global.arupex_deep_value = require('deep-value');
 }
 
 if (typeof arupex_deep_setter === 'undefined' && typeof require !== 'undefined') {
-    arupex_deep_setter = require('deep-setter');
+    global.arupex_deep_setter = require('deep-setter');
 }
 
 function arupex_map_attack(mapOrArray, key, asArrayValue) {

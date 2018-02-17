@@ -2,6 +2,8 @@
  * Created by daniel.irwin on 6/24/16.
  */
 
+'use strict';
+
 if (typeof arupex_deep_value === 'undefined' && typeof require !== 'undefined') {
     arupex_deep_value = require('deep-value');
 }
